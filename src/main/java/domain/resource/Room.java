@@ -1,0 +1,47 @@
+package domain.resource;
+
+import money.Money;
+
+import java.util.Set;
+
+public class Room extends Resource {
+    private int seats;
+    private Set<String> equipment;
+
+    public Room(String name, Money customHourlyRate, int seats, Set<String> equipment) {
+        super(name, customHourlyRate);
+        this.seats = seats;
+        this.equipment = equipment;
+    }
+
+    public Room(String name, int seats, Set<String> equipment) {
+        this(name, null, seats, equipment);
+    }
+
+    public int getSeats() {
+        return seats;
+    }
+
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
+
+    public Set<String> getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(Set<String> equipment) {
+        this.equipment = equipment;
+    }
+
+    @Override
+    protected Money baseRatePerHour() {
+        return Money.of("50.00");
+    }
+
+    @Override
+    public String describe() {
+        String eqString = equipment.isEmpty() ? "lack of equipment" : String.join(", ", equipment);
+        return String.format("Room '%s' [Seats: %d, Equipment: %s]", getName(), seats, eqString);
+    }
+}
