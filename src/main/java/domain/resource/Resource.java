@@ -8,6 +8,7 @@ public abstract class Resource {
     private final String name;
     private final Money customHourlyRate;
 
+    // Konstruktory
     public Resource(String name, Money customHourlyRate) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Resource name cannot be empty");
@@ -20,21 +21,21 @@ public abstract class Resource {
         this(name, null);
     }
 
+    // Metody abstrakcyjne
     protected abstract Money baseRatePerHour();
     public abstract String describe();
 
+    // Metody konkretne
     public Money hourlyRate() {
         return customHourlyRate != null ? customHourlyRate : baseRatePerHour();
     }
 
+    // Akcesory
     public String getName() {
         return name;
     }
 
-    public Money getCustomHourlyRate() {
-        return customHourlyRate;
-    }
-
+    // Metody pomocnicze
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

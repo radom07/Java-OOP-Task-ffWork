@@ -61,4 +61,16 @@ public class Booking {
     public BookingStatus getStatus() {
         return status;
     }
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public LocalDateTime getStart() {
+        return start;
+    }
+
+    public LocalDateTime getEnd() {
+        return end;
+    }
 }
