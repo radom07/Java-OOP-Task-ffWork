@@ -8,6 +8,10 @@ public class IndividualUser extends User {
         this.studentId = studentId;
     }
 
+    public IndividualUser(String email, String displayName) {
+        super(email, displayName);
+    }
+
     public String getStudentId() {
         return studentId;
     }
