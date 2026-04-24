@@ -5,6 +5,8 @@ public class CompanyUser extends User {
     private String taxId; //NIP
 
     public CompanyUser(String email, String displayName, String companyName, String taxId) {
+        if (taxId == null || taxId.isBlank())
+            throw new IllegalArgumentException("Tax ID cannot be empty.");
         super(email, displayName);
         this.companyName = companyName;
         this.taxId = taxId;
@@ -14,16 +16,8 @@ public class CompanyUser extends User {
         return companyName;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
     public String getTaxId() {
         return taxId;
-    }
-
-    public void setTaxId(String taxId) {
-        this.taxId = taxId;
     }
 
     @Override

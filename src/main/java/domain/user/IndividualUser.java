@@ -8,6 +8,7 @@ public class IndividualUser extends User {
         this.studentId = studentId;
     }
 
+    // Konstruktor bez studentId jeśli opcjonalny
     public IndividualUser(String email, String displayName) {
         super(email, displayName);
     }
@@ -16,12 +17,10 @@ public class IndividualUser extends User {
         return studentId;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
-    }
-
     @Override
     public String toString() {
+        if (studentId == null)
+            return super.toString();
         return super.toString() + " Student ID: " + studentId;
     }
 }

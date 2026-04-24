@@ -5,10 +5,15 @@ import money.Money;
 import java.util.Set;
 
 public class Room extends Resource {
-    private int seats;
-    private Set<String> equipment;
+    private static final String BASE_RATE_PER_HOUR = "50.00";
+
+    private final int seats;
+    private final Set<String> equipment;
 
     public Room(String name, Money customHourlyRate, int seats, Set<String> equipment) {
+        if (seats < 1) {
+            throw new IllegalArgumentException("Room must have at least one seat");
+        }
         super(name, customHourlyRate);
         this.seats = seats;
         this.equipment = equipment;
@@ -22,21 +27,13 @@ public class Room extends Resource {
         return seats;
     }
 
-    public void setSeats(int seats) {
-        this.seats = seats;
-    }
-
     public Set<String> getEquipment() {
         return equipment;
     }
 
-    public void setEquipment(Set<String> equipment) {
-        this.equipment = equipment;
-    }
-
     @Override
     protected Money baseRatePerHour() {
-        return Money.of("50.00");
+        return Money.of(BASE_RATE_PER_HOUR);
     }
 
     @Override

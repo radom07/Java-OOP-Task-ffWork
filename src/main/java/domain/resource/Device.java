@@ -3,7 +3,8 @@ package domain.resource;
 import money.Money;
 
 public class Device extends Resource {
-    private int quantity;
+    private static final String BASE_RATE_PER_HOUR = "10.00";
+    private final int quantity;
 
     public Device(String name, Money customHourlyRate, int quantity) {
         super(name, customHourlyRate);
@@ -19,7 +20,7 @@ public class Device extends Resource {
 
     @Override
     protected Money baseRatePerHour() {
-        return Money.of("10.00");
+        return Money.of(BASE_RATE_PER_HOUR);
     }
 
     @Override

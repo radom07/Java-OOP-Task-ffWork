@@ -7,12 +7,10 @@ import java.util.List;
 
 public class UserTest {
     public static void main(String[] args) {
-        System.out.println("--- Rozpoczynamy testy hierarchii Użytkowników ---\n");
-
         // 1. Tworzenie użytkownika indywidualnego (ze studentId)
         IndividualUser student = new IndividualUser(
-                "jan.kowalski@uczelnia.pl",
-                "Janek Kowalski",
+                "jan.kowalski@university.edu",
+                "Jan Kowalski",
                 "123456"
         );
 
@@ -24,34 +22,32 @@ public class UserTest {
 
         // 3. Tworzenie użytkownika firmowego
         CompanyUser company = new CompanyUser(
-                "kontakt@mojafirma.pl",
-                "Obsługa Klienta",
-                "Tech-Bud Sp. z o.o.",
+                "contact@mycompany.com",
+                "Customer Support",
+                "Tech-Build LLC",
                 "1234567890"
         );
 
         // --- TEST POLIMORFIZMU ---
-        // Ponieważ obie klasy dziedziczą po "User", możemy wrzucić je do jednej listy!
+        // Ponieważ obie klasy dziedziczą po "User", możemy wrzucić je do jednej listy
         List<User> allUsers = new ArrayList<>();
         allUsers.add(student);
         allUsers.add(normalUser);
         allUsers.add(company);
 
-        System.out.println("Lista wszystkich użytkowników w systemie:");
+        System.out.println("List of all users in the system:");
         for (User user : allUsers) {
-            // Program sam rozpozna, z jakiego typu obiektem ma do czynienia
-            // i wywoła odpowiednią metodę toString() dla konkretnej klasy.
             System.out.println("- " + user.toString());
         }
 
-        System.out.println("\n--- Testy walidacji (Oczekiwane błędy) ---");
+        System.out.println("\n--- Validation tests (Expected errors) ---");
 
-        System.out.print("Próba utworzenia firmy bez NIPu: ");
+        System.out.print("Attempting to create a company without a Tax ID: ");
         try {
-            new CompanyUser("zly@mail.pl", "Brak Nipu", "Firma Krzak", "");
-            System.out.println("[BŁĄD] Program na to pozwolił!");
+            new CompanyUser("bad@email.com", "No Tax ID", "Fake Company", "");
+            System.out.println("[ERROR] The program allowed it!");
         } catch (IllegalArgumentException e) {
-            System.out.println("[OK] Złapano wyjątek -> " + e.getMessage());
+            System.out.println("[OK] Exception caught -> " + e.getMessage());
         }
     }
 }

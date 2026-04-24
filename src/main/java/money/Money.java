@@ -12,7 +12,12 @@ public final class Money implements Comparable<Money> {
 
     private final BigDecimal amount; //PLN
 
+    // Konstruktory
     public Money(BigDecimal amount) {
+        if (amount == null) {
+            throw new IllegalArgumentException("Amount cannot be null");
+        }
+
         BigDecimal scaledAmount = amount.setScale(2, RoundingMode.HALF_UP);
 
         if (scaledAmount.compareTo(BigDecimal.ZERO) < 0) {
@@ -23,6 +28,9 @@ public final class Money implements Comparable<Money> {
     }
 
     public static Money of(String amountString) {
+        if (amountString == null || amountString.isBlank()) {
+            throw new IllegalArgumentException("Amount cannot be null or blank");
+        }
         return new Money(new BigDecimal(amountString));
     }
 
@@ -35,12 +43,18 @@ public final class Money implements Comparable<Money> {
         return new Money(this.amount.subtract(other.amount));
     }
 
-    public Money multiply(BigDecimal m) {
-        return new Money(this.amount.multiply(m));
+    public Money multiply(BigDecimal multiplier) {
+        if (multiplier == null) {
+            throw new IllegalArgumentException("Multiplier cannot be null");
+        }
+        if (multiplier.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Multiplier cannot be negative");
+        }
+        return new Money(this.amount.multiply(multiplier));
     }
 
-    public Money multiply(double m) {
-        return multiply(BigDecimal.valueOf(m));
+    public Money multiply(double multiplier) {
+        return multiply(BigDecimal.valueOf(multiplier));
     }
 
     //Metody pomocnicze

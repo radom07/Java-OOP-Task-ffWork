@@ -2,11 +2,16 @@ package domain.resource;
 
 import money.Money;
 
+import java.util.Objects;
+
 public abstract class Resource {
-    private String name;
-    private Money customHourlyRate;
+    private final String name;
+    private final Money customHourlyRate;
 
     public Resource(String name, Money customHourlyRate) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Resource name cannot be empty");
+        }
         this.name = name;
         this.customHourlyRate = customHourlyRate;
     }
@@ -26,15 +31,19 @@ public abstract class Resource {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Money getCustomHourlyRate() {
         return customHourlyRate;
     }
 
-    public void setCustomHourlyRate(Money customHourlyRate) {
-        this.customHourlyRate = customHourlyRate;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Resource resource = (Resource) o;
+        return Objects.equals(name, resource.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
     }
 }
