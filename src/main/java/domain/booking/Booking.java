@@ -3,9 +3,11 @@ package domain.booking;
 import domain.resource.Resource;
 import domain.user.User;
 import money.Money;
+import payment.Payment;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 public class Booking {
     private final String id;
@@ -15,9 +17,9 @@ public class Booking {
     private final LocalDateTime end;
     private BookingStatus status;
     private final Money calculatedPrice;
-//   private Payment payment;
+   private Payment payment;
 
-    public Booking(String id, User user, Resource resource, LocalDateTime start, LocalDateTime end, Money calculatedPrice) {
+    public Booking(String id, User user, Resource resource, LocalDateTime start, LocalDateTime end, Money calculatedPrice, Payment payment) {
         if (start == null || end == null) {
             throw new IllegalArgumentException("Start and end cannot be null");
         }
@@ -30,7 +32,7 @@ public class Booking {
         this.end = end;
         this.calculatedPrice = calculatedPrice;
         this.status = BookingStatus.PENDING;
-//        this.payment = payment;
+        this.payment = payment;
     }
 
     public void confirm() {
@@ -58,6 +60,10 @@ public class Booking {
         return (int) ChronoUnit.MINUTES.between(start, end);
     }
 
+    public String getId() {
+        return id;
+    }
+
     public BookingStatus getStatus() {
         return status;
     }
@@ -72,5 +78,17 @@ public class Booking {
 
     public LocalDateTime getEnd() {
         return end;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Booking booking = (Booking) o;
+        return Objects.equals(id, booking.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

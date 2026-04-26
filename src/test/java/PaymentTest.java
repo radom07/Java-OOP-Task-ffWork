@@ -1,8 +1,7 @@
 import domain.user.IndividualUser;
-import domain.user.User;
 import money.Money;
 import payment.CardPayment;
-import payment.Invoice;
+import billing.Invoice;
 import payment.Payment;
 
 import java.math.BigDecimal;

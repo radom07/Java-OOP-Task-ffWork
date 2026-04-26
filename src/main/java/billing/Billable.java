@@ -1,4 +1,4 @@
-package payment;
+package billing;
 
 import domain.booking.Booking;
 
