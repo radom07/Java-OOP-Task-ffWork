@@ -9,7 +9,7 @@ import java.math.RoundingMode;
 public class StandardPricing implements PricingPolicy {
     @Override
     public Money price(Booking booking) {
-        BigDecimal pricePerMinute = booking.getResource().hourlyRate().getAmount().divide(new BigDecimal(60));
+        BigDecimal pricePerMinute = booking.getResource().hourlyRate().getAmount().divide(new BigDecimal(60),2, RoundingMode.HALF_UP);
         BigDecimal minutes = BigDecimal.valueOf(booking.durationMinutes());
         BigDecimal price = pricePerMinute.multiply(minutes);
 

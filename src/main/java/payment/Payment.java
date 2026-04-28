@@ -15,6 +15,10 @@ public abstract class Payment {
 
     public abstract void capture();
 
+    public Money getAmount() {
+        return amount;
+    }
+
     public PaymentStatus getStatus() {
         return status;
     }

@@ -13,7 +13,6 @@ public class BookingTest {
         // Testowe dane
         User dummyUser = new IndividualUser("john.doe@example.com", "John Doe");
         Resource dummyResource = new Desk("Hot Desk 01", Desk.DeskType.HOT);
-        Money dummyPrice = Money.of("50.00");
 
         // 1. Czas końcowy wcześniej niż czas startowy
         System.out.print("Test 1 - Attempt to book with reversed dates (End before Start): ");
@@ -21,8 +20,7 @@ public class BookingTest {
             new Booking(
                     "BK-20231025-01", dummyUser, dummyResource,
                     LocalDateTime.of(2023, 10, 25, 14, 0),
-                    LocalDateTime.of(2023, 10, 25, 12, 0),
-                    dummyPrice
+                    LocalDateTime.of(2023, 10, 25, 12, 0)
             );
             System.out.println("[ERROR] Program allowed invalid date range!");
         } catch (IllegalArgumentException e) {
@@ -35,8 +33,7 @@ public class BookingTest {
             new Booking(
                     "BK-20231025-02", dummyUser, dummyResource,
                     LocalDateTime.of(2023, 10, 25, 12, 0),
-                    LocalDateTime.of(2023, 10, 25, 12, 0),
-                    dummyPrice
+                    LocalDateTime.of(2023, 10, 25, 12, 0)
             );
             System.out.println("[ERROR] Program allowed a 0-minute booking!");
         } catch (IllegalArgumentException e) {
@@ -46,7 +43,7 @@ public class BookingTest {
         // Testowy booking
         LocalDateTime start = LocalDateTime.of(2023, 10, 25, 10, 0);
         LocalDateTime end = LocalDateTime.of(2023, 10, 25, 12, 30);
-        Booking validBooking = new Booking("BK-20231025-03", dummyUser, dummyResource, start, end, dummyPrice);
+        Booking validBooking = new Booking("BK-20231025-03", dummyUser, dummyResource, start, end);
 
         // 3. Test durationMinutes
         System.out.println("\nTest 3 - Duration calculation (10:00 to 12:30):");
@@ -73,7 +70,7 @@ public class BookingTest {
 
         System.out.print("Test 6 - Forbidden transition (PENDING -> COMPLETED): ");
         try {
-            Booking newBooking = new Booking("BK-20231025-04", dummyUser, dummyResource, start, end, dummyPrice);
+            Booking newBooking = new Booking("BK-20231025-04", dummyUser, dummyResource, start, end);
             newBooking.complete();
             System.out.println("[ERROR] Program allowed completion of an unconfirmed booking!");
         } catch (IllegalStateException e) {

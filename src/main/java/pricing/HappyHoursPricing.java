@@ -4,6 +4,7 @@ import domain.booking.Booking;
 import money.Money;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class HappyHoursPricing implements PricingPolicy {
     private static final int HAPPY_HOURS_START_HOUR = 14;
@@ -18,7 +19,7 @@ public class HappyHoursPricing implements PricingPolicy {
         int startHour = booking.getStart().getHour();
 
         if (startHour >= HAPPY_HOURS_START_HOUR && startHour < HAPPY_HOURS_END_HOUR) {
-            BigDecimal discountFraction = DISCOUNT_PERCENTAGE.divide(new BigDecimal("100"));
+            BigDecimal discountFraction = DISCOUNT_PERCENTAGE.divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP);
             Money discountAmount = basePrice.multiply(discountFraction);
             Money discountedPrice = basePrice.subtract(discountAmount);
             return discountedPrice;

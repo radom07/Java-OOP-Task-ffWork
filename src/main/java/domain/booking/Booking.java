@@ -10,16 +10,16 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class Booking {
-    private final String id;
+    private final String id; // np. BK-<yyyyMMdd>-<counter>
     private final User user;
     private final Resource resource;
     private final LocalDateTime start;
     private final LocalDateTime end;
     private BookingStatus status;
-    private final Money calculatedPrice;
-   private Payment payment;
+    private Money calculatedPrice;
+    private Payment payment;
 
-    public Booking(String id, User user, Resource resource, LocalDateTime start, LocalDateTime end, Money calculatedPrice, Payment payment) {
+    public Booking(String id, User user, Resource resource, LocalDateTime start, LocalDateTime end) {
         if (start == null || end == null) {
             throw new IllegalArgumentException("Start and end cannot be null");
         }
@@ -30,9 +30,7 @@ public class Booking {
         this.resource = resource;
         this.start = start;
         this.end = end;
-        this.calculatedPrice = calculatedPrice;
         this.status = BookingStatus.PENDING;
-        this.payment = payment;
     }
 
     public void confirm() {
@@ -64,8 +62,8 @@ public class Booking {
         return id;
     }
 
-    public BookingStatus getStatus() {
-        return status;
+    public User getUser() {
+        return user;
     }
 
     public Resource getResource() {
@@ -78,6 +76,22 @@ public class Booking {
 
     public LocalDateTime getEnd() {
         return end;
+    }
+
+    public BookingStatus getStatus() {
+        return status;
+    }
+
+    public Money getCalculatedPrice() {
+        return calculatedPrice;
+    }
+
+    public void setCalculatedPrice(Money calculatedPrice) {
+        this.calculatedPrice = calculatedPrice;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     @Override

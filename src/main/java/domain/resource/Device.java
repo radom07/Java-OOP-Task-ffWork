@@ -18,6 +18,10 @@ public class Device extends Resource {
         this(name, null, quantity);
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
     @Override
     protected Money baseRatePerHour() {
         return Money.of(BASE_RATE_PER_HOUR);

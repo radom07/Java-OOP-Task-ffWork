@@ -6,7 +6,7 @@ import money.Money;
 import java.time.LocalDateTime;
 
 public class Invoice {
-    private final String invoiceNumber;
+    private final String invoiceNumber; // np. INV-<yyyyMMdd>-<counter>
     private final LocalDateTime issueDate;
     private final User buyer;
     private final Money total;
@@ -22,12 +22,12 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return "Invoice{" +
-                "invoiceNumber='" + invoiceNumber + '\'' +
-                ", issueDate=" + issueDate +
-                ", buyer=" + buyer +
-                ", total=" + total +
-                ", itemDescription='" + itemDescription + '\'' +
-                '}';
+        return String.format(
+                "Invoice Number: '%s', Issue Date: %s, Buyer: %s, Total price: %s, Item Description: '%s'",
+                invoiceNumber,
+                issueDate,
+                buyer,
+                total,
+                itemDescription);
     }
 }
