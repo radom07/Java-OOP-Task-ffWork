@@ -112,7 +112,7 @@ public class Booking {
                 "Booking[%s] Status: %s | Resource: '%s' | Time: %s -> %s | Price: %s | Payment: %s",
                 id,
                 status,
-                resource.getName(), // Zakładam, że Resource ma metodę getName()
+                resource.getName(),
                 start.truncatedTo(ChronoUnit.MINUTES),
                 end.truncatedTo(ChronoUnit.MINUTES),
                 calculatedPrice != null ? calculatedPrice : "N/A",
