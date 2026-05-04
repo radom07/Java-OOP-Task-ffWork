@@ -105,4 +105,18 @@ public class Booking {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Booking[%s] Status: %s | Resource: '%s' | Time: %s -> %s | Price: %s | Payment: %s",
+                id,
+                status,
+                resource.getName(), // Zakładam, że Resource ma metodę getName()
+                start.truncatedTo(ChronoUnit.MINUTES),
+                end.truncatedTo(ChronoUnit.MINUTES),
+                calculatedPrice != null ? calculatedPrice : "N/A",
+                payment != null ? payment.getStatus() : "N/A"
+        );
+    }
 }
