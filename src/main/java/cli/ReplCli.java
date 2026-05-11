@@ -154,22 +154,27 @@ public class ReplCli {
         String command = parts[0].toUpperCase();
         String name = parts[1];
 
-        if (command.equals("ADD_ROOM")) {
-            int seats = Integer.parseInt(parts[2]);
-            Money hourlyRate = Money.of(parts[3]);
-            Set<String> equipment = Set.of();
-            resourceRepository.add(new Room(name, hourlyRate, seats, equipment));
-            System.out.println("OK: Added room " + name);
-        } else if (command.equals("ADD_DESK")) {
-            Desk.DeskType type = parts[2].equalsIgnoreCase("HOT") ? Desk.DeskType.HOT : Desk.DeskType.FIXED;
-            Money hourlyRate = Money.of(parts[3]);
-            resourceRepository.add(new Desk(name, hourlyRate, type));
-            System.out.println("OK: Added desk " + name);
-        } else if (command.equals("ADD_DEVICE")) {
-            int quantity = Integer.parseInt(parts[2]);
-            Money hourlyRate = Money.of(parts[3]);
-            resourceRepository.add(new Device(name, hourlyRate, quantity));
-            System.out.println("OK: Added device " + name);
+        switch (command) {
+            case "ADD_ROOM" -> {
+                int seats = Integer.parseInt(parts[2]);
+                Money hourlyRate = Money.of(parts[3]);
+                Set<String> equipment = Set.of();
+                resourceRepository.add(new Room(name, hourlyRate, seats, equipment));
+                System.out.println("OK: Added room " + name);
+            }
+            case "ADD_DESK" -> {
+                Desk.DeskType type = parts[2].equalsIgnoreCase("HOT") ? Desk.DeskType.HOT : Desk.DeskType.FIXED;
+                Money hourlyRate = Money.of(parts[3]);
+                resourceRepository.add(new Desk(name, hourlyRate, type));
+                System.out.println("OK: Added desk " + name);
+            }
+            case "ADD_DEVICE" -> {
+                int quantity = Integer.parseInt(parts[2]);
+                Money hourlyRate = Money.of(parts[3]);
+                resourceRepository.add(new Device(name, hourlyRate, quantity));
+                System.out.println("OK: Added device " + name);
+            }
+            default -> throw new IllegalArgumentException("Unknown add resource command: " + command);
         }
     }
 
@@ -258,9 +263,7 @@ public class ReplCli {
         String paymentDetails = parts[3];
 
         if (paymentMethod.equals("CARD")) {
-            String last4 = parts[3];
-
-            Payment paymentResult = paymentService.pay(bookingId, last4);
+            Payment paymentResult = paymentService.pay(bookingId, paymentDetails);
             if (paymentResult instanceof CardPayment cardPayment)
                 System.out.println("OK: Payment captured method=" + paymentMethod + " last4=" + cardPayment.getLast4());
         } else if (paymentMethod.equals("WALLET")) {

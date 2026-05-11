@@ -32,13 +32,9 @@ public class BookingService {
     }
 
     public Booking book(User u, Resource r, LocalDateTime start, LocalDateTime end) {
-        List<Booking> allBookings = bookingRepository.findAll();
+        List<Booking> overlaps = bookingRepository.findOverlappingBookings(r, start, end);
 
-        long overlapCount = allBookings.stream()
-                .filter(b -> b.getResource().equals(r))
-                .filter(b -> b.getStatus() == BookingStatus.PENDING || b.getStatus() == BookingStatus.CONFIRMED)
-                .filter(b -> start.isBefore(b.getEnd()) && b.getStart().isBefore(end))
-                .count();
+        int overlapCount = overlaps.size();
 
         if (r instanceof Device device) {
             if (overlapCount >= device.getQuantity()) {
@@ -101,11 +97,7 @@ public class BookingService {
     }
 
     public List<Booking> list(User user, Resource resource, BookingStatus status) {
-        return bookingRepository.findAll().stream()
-                .filter(b -> user == null || b.getUser().equals(user))
-                .filter(b -> resource == null || b.getResource().equals(resource))
-                .filter(b -> status == null || b.getStatus() == status)
-                .toList();
+        return bookingRepository.findByParams(user, resource, status);
     }
 
     public PricingPolicy getCurrentPricingPolicy() {

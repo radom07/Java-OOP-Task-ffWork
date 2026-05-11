@@ -6,7 +6,7 @@ public class Desk extends Resource {
     private static final String HOT_BASE_RATE_PER_HOUR = "10.00";
     private static final String FIXED_BASE_RATE_PER_HOUR = "15.00";
 
-   private final DeskType type;
+    private final DeskType type;
 
     public Desk(String name, Money customHourlyRate, DeskType type) {
         if (type == null) {
@@ -35,6 +35,6 @@ public class Desk extends Resource {
     }
 
     public enum DeskType {
-       HOT, FIXED
-   }
+        HOT, FIXED
+    }
 }

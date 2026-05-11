@@ -7,12 +7,14 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class StandardPricing implements PricingPolicy {
+
+    private static final BigDecimal MINUTES_IN_HOUR = BigDecimal.valueOf(60);
+
     @Override
     public Money price(Booking booking) {
-        BigDecimal pricePerMinute = booking.getResource().hourlyRate().getAmount().divide(new BigDecimal(60),2, RoundingMode.HALF_UP);
-        BigDecimal minutes = BigDecimal.valueOf(booking.durationMinutes());
-        BigDecimal price = pricePerMinute.multiply(minutes);
+        Money resourceHourlyRate = booking.getResource().hourlyRate();
+        BigDecimal bookingDuration = BigDecimal.valueOf(booking.durationMinutes());
 
-        return new Money(price);
+        return resourceHourlyRate.multiply(bookingDuration).divide(MINUTES_IN_HOUR);
     }
 }

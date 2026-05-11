@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class PaymentTest {
     public static void main(String[] args) {
         Money amountToPay = new Money(new BigDecimal("150.00"));
-        Payment payment = new CardPayment( amountToPay, "PAY-123", "4242");
+        Payment payment = new CardPayment(amountToPay, "PAY-123", "4242");
 
         System.out.println("Status start: " + payment.getStatus());
 

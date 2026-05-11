@@ -23,6 +23,7 @@ public abstract class Resource {
 
     // Metody abstrakcyjne
     protected abstract Money baseRatePerHour();
+
     public abstract String describe();
 
     // Metody konkretne

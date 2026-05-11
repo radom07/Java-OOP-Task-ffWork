@@ -36,10 +36,16 @@ public final class Money implements Comparable<Money> {
 
     // Operacje Matematyczne
     public Money add(Money other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Money to add cannot be null");
+        }
         return new Money(this.amount.add(other.amount));
     }
 
     public Money subtract(Money other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Money to subtract cannot be null");
+        }
         return new Money(this.amount.subtract(other.amount));
     }
 
@@ -53,8 +59,15 @@ public final class Money implements Comparable<Money> {
         return new Money(this.amount.multiply(multiplier));
     }
 
-    public Money multiply(double multiplier) {
-        return multiply(BigDecimal.valueOf(multiplier));
+    public Money divide(BigDecimal divisor) {
+        if (divisor == null) {
+            throw new IllegalArgumentException("Divisor cannot be null");
+        }
+        if (divisor.compareTo(BigDecimal.ZERO) == 0) {
+            throw new IllegalArgumentException("Cannot divide by zero");
+        }
+        BigDecimal newAmount = this.amount.divide(divisor, 2, RoundingMode.HALF_UP);
+        return new Money(newAmount);
     }
 
     //Metody pomocnicze
